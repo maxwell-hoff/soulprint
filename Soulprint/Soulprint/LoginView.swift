@@ -18,57 +18,60 @@ struct LoginView: View {
     @Binding var loggedIn: Bool
 
     var body: some View {
-        VStack {
-            Text("Soulprint")
-                .font(.largeTitle)
-                .padding(.bottom, 50)
-            TextField("Email", text: $email)
-                .padding()
-                .background(Color.gray)
-                .cornerRadius(5.0)
-                .padding(.bottom, 20)
-            SecureField("Password", text: $password)
-                .padding()
-                .background(Color.gray)
-                .cornerRadius(5.0)
-                .padding(.bottom, 20)
-            if !error.isEmpty {
-                Text(error)
-                    .foregroundColor(.red)
+        GeometryReader { geometry in
+            VStack {
+                Text("Soulprint")
+                    .font(.largeTitle)
+                    .padding(.bottom, 50)
+                TextField("Email", text: $email)
+                    .padding()
+                    .background(Color.gray)
+                    .cornerRadius(5.0)
                     .padding(.bottom, 20)
-            }
-            Button(action: {
-                signIn()
-            }) {
-                Text("Log In")
-                    .font(.headline)
+                SecureField("Password", text: $password)
                     .padding()
-                    .frame(width: 220, height: 60)
-                    .background(darkGray) // Changes the button color to dark gray.
-                    .foregroundColor(forestGreen) // Changes the text color to forest green.
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
-                    )
+                    .background(Color.gray)
+                    .cornerRadius(5.0)
+                    .padding(.bottom, 20)
+                if !error.isEmpty {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .padding(.bottom, 20)
+                }
+                Button(action: {
+                    signIn()
+                }) {
+                    Text("Log In")
+                        .font(.headline)
+                        .padding()
+                        .frame(width: 220, height: 60)
+                        .background(darkGray) // Changes the button color to dark gray.
+                        .foregroundColor(forestGreen) // Changes the text color to forest green.
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
+                        )
+                }
+                Button(action: {
+                    signUp()
+                }) {
+                    Text("Sign Up")
+                        .font(.headline)
+                        .padding()
+                        .frame(width: 220, height: 60)
+                        .background(darkGray) // Changes the button color to dark gray.
+                        .foregroundColor(forestGreen) // Changes the text color to forest green.
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
+                        )
+                }
             }
-            Button(action: {
-                signUp()
-            }) {
-                Text("Sign Up")
-                    .font(.headline)
-                    .padding()
-                    .frame(width: 220, height: 60)
-                    .background(darkGray) // Changes the button color to dark gray.
-                    .foregroundColor(forestGreen) // Changes the text color to forest green.
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
-                    )
-            }
+            .padding()
+            .background(darkGray.edgesIgnoringSafeArea(.all))
+            .foregroundColor(forestGreen) // Makes the text color forest green.
+            .frame(height: geometry.size.height)
         }
-        .padding()
-        .background(darkGray.edgesIgnoringSafeArea(.all))
-        .foregroundColor(forestGreen) // Makes the text color forest green.
     }
 
     func signIn() {
@@ -111,4 +114,3 @@ struct LoginView_Previews: PreviewProvider {
             .foregroundColor(forestGreen)
     }
 }
-

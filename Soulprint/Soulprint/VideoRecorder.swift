@@ -11,6 +11,8 @@ import AVKit
 import AVFoundation
 import FirebaseStorage
 
+let storage = Storage.storage(url: "gs://test-video-storage-v1")
+
 struct VideoRecorder: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIImagePickerController
     @Binding var isShown: Bool
@@ -19,10 +21,17 @@ struct VideoRecorder: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.mediaTypes = ["public.movie"]
-        picker.allowsEditing = true
-        picker.videoQuality = .typeHigh
-        picker.sourceType = .camera
+
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera // Set sourceType first
+            if let mediaTypes = UIImagePickerController.availableMediaTypes(for: .camera), mediaTypes.contains("public.movie") {
+                picker.mediaTypes = ["public.movie"] // Then set mediaTypes
+                picker.allowsEditing = true
+                picker.videoQuality = .typeHigh
+                picker.cameraCaptureMode = .video // Finally, set cameraCaptureMode
+            }
+        }
+        
         return picker
     }
 
@@ -52,7 +61,7 @@ struct VideoRecorder: UIViewControllerRepresentable {
     }
 
     func uploadVideo(withURL url: URL) {
-        let storage = Storage.storage()
+        let storage = Storage.storage(url: "<Your_GCS_Bucket_URL>")
         let storageRef = storage.reference()
         let videoRef = storageRef.child("videos/\(UUID().uuidString).mov")
 
@@ -64,8 +73,8 @@ struct VideoRecorder: UIViewControllerRepresentable {
             // Metadata contains file metadata such as size, content-type, and download URL.
             videoRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
-                    // Handle any errors
-                    return
+                        // Handle any errors
+                        return
                 }
                 // Here you can handle the download URL
             }

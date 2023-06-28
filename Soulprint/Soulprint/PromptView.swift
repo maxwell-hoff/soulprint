@@ -32,23 +32,24 @@ struct PromptView: View {
                 }) {
                     Text(promptsForSelectedSet()[index])
                         .font(.title2)
-                        .padding()
-                        .background(darkGray)
                         .foregroundColor(forestGreen)
+                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
+                        .padding([.top, .bottom])
+                        .background(darkGray)
                         .overlay(
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(forestGreen, lineWidth: 2)
                         )
-                }
-                .frame(maxWidth: .infinity)
-                .sheet(isPresented: $isVideoRecording) {
-                    VideoRecorder(isShown: $isVideoRecording, videoURL: $videoURL)
+                        .padding([.leading, .trailing], 10)
                 }
             }
             Spacer()
         }
         .background(darkGray.edgesIgnoringSafeArea(.all))
         .foregroundColor(forestGreen)
+        .sheet(isPresented: $isVideoRecording) { // Present VideoRecorder when isVideoRecording is true
+            VideoRecorder(isShown: $isVideoRecording, videoURL: $videoURL)
+        }   
     }
 
     private func promptsForSelectedSet() -> [String] {

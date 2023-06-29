@@ -8,8 +8,9 @@
 import SwiftUI
 import FirebaseAuth
 
-let darkGray = Color(UIColor(white: 0.1, alpha: 1))
-let forestGreen = Color(UIColor(red: 0.05, green: 0.25, blue: 0.05, alpha: 1))
+let backgroundColor = Color(UIColor(white: 0.125, alpha: 1))
+let fontColor = Color(UIColor(red: 0.2, green: 0.3, blue: 0.6, alpha: 1))
+let buttonColor = Color(UIColor(white: 0.15, alpha: 1))
 
 struct LoginView: View {
     @State private var email: String = ""
@@ -19,60 +20,70 @@ struct LoginView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                Text("Soulprint")
-                    .font(.largeTitle)
-                    .padding(.bottom, 50)
-                TextField("Email", text: $email)
-                    .padding()
-                    .background(Color.gray)
-                    .cornerRadius(5.0)
-                    .padding(.bottom, 20)
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color.gray)
-                    .cornerRadius(5.0)
-                    .padding(.bottom, 20)
-                if !error.isEmpty {
-                    Text(error)
-                        .foregroundColor(.red)
+            ZStack {
+                Image("fingerprint-logo-v3")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .opacity(1.0)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                
+                VStack {
+                    Text("")
+                        .font(.largeTitle.bold().italic())
+                        .padding(.bottom, 400)
+                    TextField("Email", text: $email)
+                        .padding()
+                        .foregroundColor(.black)
+                        .background(Color.gray)
+                        .cornerRadius(5.0)
                         .padding(.bottom, 20)
-                }
-                Button(action: {
-                    signIn()
-                }) {
-                    Text("Log In")
-                        .font(.headline)
+                    SecureField("Password", text: $password)
                         .padding()
-                        .frame(width: 220, height: 60)
-                        .background(darkGray) // Changes the button color to dark gray.
-                        .foregroundColor(forestGreen) // Changes the text color to forest green.
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
-                        )
+                        .foregroundColor(.black)
+                        .background(Color.gray)
+                        .cornerRadius(5.0)
+                        .padding(.bottom, 20)
+                    if !error.isEmpty {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .padding(.bottom, 20)
+                    }
+                    Button(action: {
+                        signIn()
+                    }) {
+                        Text("Log In")
+                            .font(.headline)
+                            .padding()
+                            .frame(width: 220, height: 60)
+                            .background(buttonColor) // Changes the button color to dark gray.
+                            .foregroundColor(fontColor) // Changes the text color to forest green.
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(fontColor, lineWidth: 2) // Adds a forest green outline.
+                            )
+                    }
+                    Button(action: {
+                        signUp()
+                    }) {
+                        Text("Sign Up")
+                            .font(.headline)
+                            .padding()
+                            .frame(width: 220, height: 60)
+                            .background(buttonColor) // Changes the button color to dark gray.
+                            .foregroundColor(fontColor) // Changes the text color to forest green.
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(fontColor, lineWidth: 2) // Adds a forest green outline.
+                            )
+                    }
                 }
-                Button(action: {
-                    signUp()
-                }) {
-                    Text("Sign Up")
-                        .font(.headline)
-                        .padding()
-                        .frame(width: 220, height: 60)
-                        .background(darkGray) // Changes the button color to dark gray.
-                        .foregroundColor(forestGreen) // Changes the text color to forest green.
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(forestGreen, lineWidth: 2) // Adds a forest green outline.
-                        )
-                }
+                .padding()
+                .foregroundColor(fontColor)
             }
-            .padding()
-            .background(darkGray.edgesIgnoringSafeArea(.all))
-            .foregroundColor(forestGreen) // Makes the text color forest green.
-            .frame(height: geometry.size.height)
+            .background(backgroundColor.edgesIgnoringSafeArea(.all))
         }
     }
+
 
     func signIn() {
         if !email.isEmpty && !password.isEmpty {
@@ -110,7 +121,7 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(loggedIn: .constant(false))
-            .background(darkGray.edgesIgnoringSafeArea(.all))
-            .foregroundColor(forestGreen)
+            .background(backgroundColor.edgesIgnoringSafeArea(.all))
+            .foregroundColor(fontColor)
     }
 }

@@ -12,7 +12,7 @@ struct ContentView: View {
 
     var body: some View {
         if loggedIn {
-            PromptView()
+            PromptView(loggedIn: $loggedIn)
         } else {
             LoginView(loggedIn: $loggedIn)
         }

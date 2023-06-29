@@ -11,8 +11,6 @@ import AVKit
 import AVFoundation
 import FirebaseStorage
 
-let storage = Storage.storage(url: "gs://test-video-storage-v1")
-
 struct VideoRecorder: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIImagePickerController
     @Binding var isShown: Bool
@@ -61,7 +59,7 @@ struct VideoRecorder: UIViewControllerRepresentable {
     }
 
     func uploadVideo(withURL url: URL) {
-        let storage = Storage.storage(url: "<Your_GCS_Bucket_URL>")
+        let storage = Storage.storage(url: "gs://soulprint-402c8.appspot.com")
         let storageRef = storage.reference()
         let videoRef = storageRef.child("videos/\(UUID().uuidString).mov")
 

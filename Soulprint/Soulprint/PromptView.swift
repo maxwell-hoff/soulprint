@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct PromptView: View {
     let dailyPrompts = ["What was the high of your day?", "What was the low of your day?"]
@@ -14,42 +15,69 @@ struct PromptView: View {
     @State private var selectedPromptIndex = 0
     @State private var isVideoRecording = false
     @State private var videoURL: URL? = nil
-
+    @Binding var loggedIn: Bool
 
     var body: some View {
-        VStack {
-            Picker("Prompt Set", selection: $selectedPromptSetIndex) {
-                Text("Daily").tag(0)
-                Text("Deep Dive").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-
-            ForEach(promptsForSelectedSet().indices) { index in
-                Button(action: {
-                    selectedPromptIndex = index
-                    isVideoRecording = true
-                }) {
-                    Text(promptsForSelectedSet()[index])
-                        .font(.title2)
-                        .foregroundColor(forestGreen)
-                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
-                        .padding([.top, .bottom])
-                        .background(darkGray)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(forestGreen, lineWidth: 2)
-                        )
-                        .padding([.leading, .trailing], 10)
+        ZStack {
+            VStack {
+                Picker("Prompt Set", selection: $selectedPromptSetIndex) {
+                    Text("Daily").tag(0)
+                    Text("Deep Dive").tag(1)
                 }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.top, 50)
+
+                ForEach(promptsForSelectedSet().indices) { index in
+                    Button(action: {
+                        selectedPromptIndex = index
+                        isVideoRecording = true
+                    }) {
+                        Text(promptsForSelectedSet()[index])
+                            .font(.title2.bold())
+                            .foregroundColor(fontColor)
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
+                            .padding([.top, .bottom], 10)
+                            .padding([.leading, .trailing], 4)
+                            .background(buttonColor)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(fontColor, lineWidth: 2)
+                            )
+                            .padding([.leading, .trailing], 10)
+                    }
+                }
+                Spacer()
             }
-            Spacer()
+
+            VStack {
+                HStack {
+                    Button(action: {
+                        signOut()
+                    }) {
+                        Text("Sign Out")
+                            .font(.headline)
+                            .foregroundColor(fontColor) // Changes the text color to forest green.
+                    }
+                    .padding()
+                    Spacer()
+                }
+                Spacer()
+            }
         }
-        .background(darkGray.edgesIgnoringSafeArea(.all))
-        .foregroundColor(forestGreen)
+        .background(backgroundColor.edgesIgnoringSafeArea(.all))
+        .foregroundColor(fontColor)
         .sheet(isPresented: $isVideoRecording) { // Present VideoRecorder when isVideoRecording is true
             VideoRecorder(isShown: $isVideoRecording, videoURL: $videoURL)
-        }   
+        }
+    }
+    
+    private func signOut() {
+        do {
+            try Auth.auth().signOut()
+            self.loggedIn = false
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
 
     private func promptsForSelectedSet() -> [String] {
@@ -67,7 +95,6 @@ struct PromptView: View {
 
 struct PromptView_Previews: PreviewProvider {
     static var previews: some View {
-        PromptView()
+        PromptView(loggedIn: .constant(true))
     }
 }
-

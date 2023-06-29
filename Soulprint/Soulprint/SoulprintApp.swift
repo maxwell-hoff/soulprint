@@ -29,3 +29,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   }
 }
 
+struct StatusBarStyle: ViewModifier {
+    var style: UIStatusBarStyle
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                let app = UIApplication.shared
+                app.windows.first?.overrideUserInterfaceStyle = style == .lightContent ? .dark : .light
+            }
+    }
+}

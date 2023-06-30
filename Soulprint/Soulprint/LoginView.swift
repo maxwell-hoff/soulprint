@@ -8,9 +8,9 @@
 import SwiftUI
 import FirebaseAuth
 
-let backgroundColor = Color(UIColor(white: 0.125, alpha: 1))
+let backgroundColor = Color(UIColor(white: 0.15, alpha: 1))
 let fontColor = Color(UIColor(red: 0.2, green: 0.3, blue: 0.6, alpha: 1))
-let buttonColor = Color(UIColor(white: 0.15, alpha: 1))
+let buttonColor = Color(UIColor(white: 0.12, alpha: 1))
 
 struct LoginView: View {
     @State private var email: String = ""

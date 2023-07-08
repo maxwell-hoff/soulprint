@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
-let backgroundColor = Color(UIColor(white: 0.15, alpha: 1))
+let backgroundColor = Color(UIColor(white: 0.25, alpha: 1))
 let fontColor = Color(UIColor(red: 0.2, green: 0.3, blue: 0.6, alpha: 1))
 let buttonColor = Color(UIColor(white: 0.12, alpha: 1))
 
@@ -21,7 +21,7 @@ struct LoginView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Image("fingerprint-logo-v3")
+                Image("fingerprint-logo-v5")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .opacity(1.0)
@@ -30,7 +30,7 @@ struct LoginView: View {
                 VStack {
                     Text("")
                         .font(.largeTitle.bold().italic())
-                        .padding(.bottom, 400)
+                        .padding(.bottom, 150)
                     TextField("Email", text: $email)
                         .padding()
                         .foregroundColor(.black)

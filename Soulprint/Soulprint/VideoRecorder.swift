@@ -10,11 +10,14 @@ import UIKit
 import AVKit
 import AVFoundation
 import FirebaseStorage
+import FirebaseFirestore
 
 struct VideoRecorder: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIImagePickerController
     @Binding var isShown: Bool
     @Binding var videoURL: URL?
+    var questionID: String
+    var userID: String
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -36,20 +39,25 @@ struct VideoRecorder: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
+        return Coordinator(self, questionID: questionID, userID: userID)
     }
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var parent: VideoRecorder
-        init(_ parent: VideoRecorder) {
+        var questionID: String
+        var userID: String
+        
+        init(_ parent: VideoRecorder, questionID: String, userID: String) {
             self.parent = parent
+            self.questionID = questionID
+            self.userID = userID
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let url = info[.mediaURL] as? URL {
                 parent.videoURL = url
                 parent.isShown = false
-                parent.uploadVideo(withURL: url)
+                parent.uploadVideo(withURL: url, questionID: questionID, userID: userID)
             }
         }
 
@@ -58,25 +66,54 @@ struct VideoRecorder: UIViewControllerRepresentable {
         }
     }
 
-    func uploadVideo(withURL url: URL) {
+    func uploadVideo(withURL url: URL, questionID: String, userID: String) {
+        print("uploadVideo called")
+        // Reference to Google Cloud Storage
         let storage = Storage.storage(url: "gs://soulprint-402c8.appspot.com")
         let storageRef = storage.reference()
-        let videoRef = storageRef.child("videos/\(UUID().uuidString).mov")
+        let uuidString = UUID().uuidString
+        let videoRef = storageRef.child("videos/\(uuidString).mov")
 
         let uploadTask = videoRef.putFile(from: url, metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
+            if let error = error {
+                print("Error uploading file: \(error)")
+                return
+            }
+            
+            guard let _ = metadata else {
                 // Handle unsuccessful upload
                 return
             }
             // Metadata contains file metadata such as size, content-type, and download URL.
             videoRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                        // Handle any errors
-                        return
+                if let error = error {
+                    print("Error getting download URL: \(error)")
+                    return
                 }
+                guard let downloadURL = url else {
+                    // Handle any errors
+                    return
+                }
+                
                 // Here you can handle the download URL
+                // Save the downloadURL along with the question's ID to Firestore
+                let db = Firestore.firestore()
+                db.collection("questions").addDocument(data: [
+                    "questionID": questionID,
+                    "userID": userID,
+                    "videoID": uuidString,
+                    "videoURL": downloadURL.absoluteString
+                ]) { error in
+                    if let error = error {
+                        print("Error writing document: \(error)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
             }
         }
     }
 }
+
+
 

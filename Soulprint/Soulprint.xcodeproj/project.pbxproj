@@ -45,6 +45,12 @@
 		788064BC2A49FBD4001C4574 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 788064BB2A49FBD4001C4574 /* FirebaseStorage */; };
 		788064BE2A49FBD4001C4574 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 788064BD2A49FBD4001C4574 /* FirebaseStorageCombine-Community */; };
 		788064C02A4A3A98001C4574 /* VideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788064BF2A4A3A98001C4574 /* VideoRecorder.swift */; };
+		78E09AEB2A58BFBE004ED5DA /* Prompts.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 78E09AEA2A58BFBE004ED5DA /* Prompts.yaml */; };
+		78E09AEE2A58C039004ED5DA /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 78E09AED2A58C039004ED5DA /* Yams */; };
+		78E09AEF2A58E0EA004ED5DA /* Prompts.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 78E09AEA2A58BFBE004ED5DA /* Prompts.yaml */; };
+		78E09AF02A58E0EB004ED5DA /* Prompts.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 78E09AEA2A58BFBE004ED5DA /* Prompts.yaml */; };
+		78E09AF22A58FFA0004ED5DA /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E09AF12A58FFA0004ED5DA /* InformationView.swift */; };
+		78E09AF42A59C429004ED5DA /* PrivacySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E09AF32A59C429004ED5DA /* PrivacySelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +86,9 @@
 		788064842A49F902001C4574 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
 		788064862A49F93C001C4574 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		788064BF2A4A3A98001C4574 /* VideoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.swift; sourceTree = "<group>"; };
+		78E09AEA2A58BFBE004ED5DA /* Prompts.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = Prompts.yaml; sourceTree = "<group>"; };
+		78E09AF12A58FFA0004ED5DA /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		78E09AF32A59C429004ED5DA /* PrivacySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySelector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +114,7 @@
 				788064A82A49FBD4001C4574 /* FirebaseFunctions in Frameworks */,
 				788064BE2A49FBD4001C4574 /* FirebaseStorageCombine-Community in Frameworks */,
 				788064B82A49FBD4001C4574 /* FirebaseRemoteConfig in Frameworks */,
+				78E09AEE2A58C039004ED5DA /* Yams in Frameworks */,
 				788064942A49FBD4001C4574 /* FirebaseAppDistribution-Beta in Frameworks */,
 				788064982A49FBD4001C4574 /* FirebaseAuthCombine-Community in Frameworks */,
 				788064B62A49FBD4001C4574 /* FirebasePerformance in Frameworks */,
@@ -158,10 +168,13 @@
 			isa = PBXGroup;
 			children = (
 				788064822A49F736001C4574 /* GoogleService-Info.plist */,
+				78E09AEA2A58BFBE004ED5DA /* Prompts.yaml */,
 				788064572A45E933001C4574 /* SoulprintApp.swift */,
 				788064592A45E933001C4574 /* ContentView.swift */,
 				788064862A49F93C001C4574 /* LoginView.swift */,
 				788064842A49F902001C4574 /* PromptView.swift */,
+				78E09AF12A58FFA0004ED5DA /* InformationView.swift */,
+				78E09AF32A59C429004ED5DA /* PrivacySelector.swift */,
 				788064BF2A4A3A98001C4574 /* VideoRecorder.swift */,
 				7880645B2A45E935001C4574 /* Assets.xcassets */,
 				7880645D2A45E935001C4574 /* Soulprint.entitlements */,
@@ -239,6 +252,7 @@
 				788064B92A49FBD4001C4574 /* FirebaseRemoteConfigSwift */,
 				788064BB2A49FBD4001C4574 /* FirebaseStorage */,
 				788064BD2A49FBD4001C4574 /* FirebaseStorageCombine-Community */,
+				78E09AED2A58C039004ED5DA /* Yams */,
 			);
 			productName = Soulprint;
 			productReference = 788064542A45E933001C4574 /* Soulprint.app */;
@@ -314,6 +328,7 @@
 			mainGroup = 7880644B2A45E933001C4574;
 			packageReferences = (
 				788064882A49FBD4001C4574 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				78E09AEC2A58C039004ED5DA /* XCRemoteSwiftPackageReference "Yams" */,
 			);
 			productRefGroup = 788064552A45E933001C4574 /* Products */;
 			projectDirPath = "";
@@ -333,6 +348,7 @@
 			files = (
 				788064602A45E935001C4574 /* Preview Assets.xcassets in Resources */,
 				7880645C2A45E935001C4574 /* Assets.xcassets in Resources */,
+				78E09AEB2A58BFBE004ED5DA /* Prompts.yaml in Resources */,
 				788064832A49F736001C4574 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78E09AEF2A58E0EA004ED5DA /* Prompts.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78E09AF02A58E0EB004ED5DA /* Prompts.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,7 +378,9 @@
 			files = (
 				7880645A2A45E933001C4574 /* ContentView.swift in Sources */,
 				788064852A49F902001C4574 /* PromptView.swift in Sources */,
+				78E09AF42A59C429004ED5DA /* PrivacySelector.swift in Sources */,
 				788064C02A4A3A98001C4574 /* VideoRecorder.swift in Sources */,
+				78E09AF22A58FFA0004ED5DA /* InformationView.swift in Sources */,
 				788064872A49F93C001C4574 /* LoginView.swift in Sources */,
 				788064582A45E933001C4574 /* SoulprintApp.swift in Sources */,
 			);
@@ -726,6 +746,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		78E09AEC2A58C039004ED5DA /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -863,6 +891,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 788064882A49FBD4001C4574 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		78E09AED2A58C039004ED5DA /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78E09AEC2A58C039004ED5DA /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
